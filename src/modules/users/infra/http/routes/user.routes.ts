@@ -1,9 +1,10 @@
+import uploadConfig from '@config/upload';
+import { CreateUserService } from '@modules/users/services/CreateUserService';
+import { UpdateUserAvatarService } from '@modules/users/services/UpdateUserAvatarService';
 import { Router } from 'express';
 import multer from 'multer';
+import UsersRepository from '../../typeorm/repositories/UsersRepository';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
-import { CreateUserService } from '../services/CreateUserService';
-import uploadConfig from '../config/upload';
-import { UpdateUserAvatarService } from '../services/UpdateUserAvatarService';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
@@ -11,7 +12,8 @@ const upload = multer(uploadConfig);
 usersRouter.post('/', async (request, response) => {
     const { name, email, password } = request.body;
 
-    const createUser = new CreateUserService();
+    const usersRepository = new UsersRepository();
+    const createUser = new CreateUserService(usersRepository);
 
     const user = await createUser.execute({
         name,
@@ -19,7 +21,7 @@ usersRouter.post('/', async (request, response) => {
         password,
     });
 
-    // @ts-expect-error
+    // @ts-ignore: Unreachable code error
     delete user.password;
 
     return response.json(user);
@@ -30,13 +32,14 @@ usersRouter.patch(
     ensureAuthenticated,
     upload.single('avatar'),
     async (request, response) => {
-        const updateUserAvatar = new UpdateUserAvatarService();
+        const usersRepository = new UsersRepository();
+        const updateUserAvatar = new UpdateUserAvatarService(usersRepository);
         const user = await updateUserAvatar.execute({
             user_id: request.user.id,
             avatarFilename: request.file.filename,
         });
 
-        // @ts-expect-error
+        // @ts-ignore: Unreachable code error
         delete user.password;
 
         return response.json(user);
