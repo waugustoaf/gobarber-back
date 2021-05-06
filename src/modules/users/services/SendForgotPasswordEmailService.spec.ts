@@ -1,8 +1,8 @@
 import FakeMailProvider from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
 import { AppError } from '@shared/errors/AppError';
 import 'reflect-metadata';
-import FakeUserTokenRepository from '../infra/typeorm/repositories/UserTokensRepository';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
+import FakeUserTokenRepository from '../repositories/fakes/FakeUserTokensRepository';
 import { SendForgotPasswordEmailService } from './SendForgotPasswordEmailService';
 
 let fakeUsersRepository: FakeUsersRepository;

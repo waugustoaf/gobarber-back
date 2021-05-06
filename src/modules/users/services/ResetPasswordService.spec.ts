@@ -1,13 +1,13 @@
 import { AppError } from '@shared/errors/AppError';
 import 'reflect-metadata';
-import FakeUserTokenRepository from '../infra/typeorm/repositories/UserTokensRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
+import FakeUserTokenRepository from '../repositories/fakes/FakeUserTokensRepository';
 import { ResetPasswordService } from './ResetPasswordService';
 
 let fakeUsersRepository: FakeUsersRepository;
-let fakeUserTokenRepository: FakeUserTokenRepository;
 let resetPassword: ResetPasswordService;
+let fakeUserTokenRepository: FakeUserTokenRepository;
 let fakeHashProvider: FakeHashProvider;
 
 describe('ResetPassword', () => {
@@ -45,9 +45,18 @@ describe('ResetPassword', () => {
         expect(generateHash).toHaveBeenCalledWith('123123');
     });
 
-    it('should not be able to reset the password with non-existing token', async () => {
+    it('should not be able to reset the password with invalid format token', async () => {
         await expect(
             resetPassword.execute({ token: '123', password: '111' }),
+        ).rejects.toBeInstanceOf(AppError);
+    });
+
+    it('should not be able to reset the password with non-existing token', async () => {
+        await expect(
+            resetPassword.execute({
+                token: 'cd6130f6-44f0-465c-9c80-2725e84451fb',
+                password: '111',
+            }),
         ).rejects.toBeInstanceOf(AppError);
     });
 

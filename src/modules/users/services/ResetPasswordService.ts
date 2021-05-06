@@ -1,6 +1,7 @@
 import { AppError } from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
 import { isAfter, addHours } from 'date-fns';
+import { validate } from 'uuid';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
@@ -16,7 +17,7 @@ export class ResetPasswordService {
         @inject('UsersRepository')
         private usersRepository: IUsersRepository,
 
-        @inject('UserTokenRepository')
+        @inject('UserTokensRepository')
         private userTokenRepository: IUserTokensRepository,
 
         @inject('HashProvider')
@@ -24,6 +25,12 @@ export class ResetPasswordService {
     ) {}
 
     public async execute({ token, password }: IRequest): Promise<void> {
+        const isUUID = validate(token);
+
+        if (!isUUID) {
+            throw new AppError('The token format is invalid');
+        }
+
         const userToken = await this.userTokenRepository.findByToken(token);
 
         if (!userToken) {
