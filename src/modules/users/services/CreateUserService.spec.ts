@@ -1,7 +1,7 @@
 import { AppError } from '@shared/errors/AppError';
 import 'reflect-metadata';
-import FakeUsersRepository from '../infra/typeorm/repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
+import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import { CreateUserService } from './CreateUserService';
 
 describe('CreateUser', () => {

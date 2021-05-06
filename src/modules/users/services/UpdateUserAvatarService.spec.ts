@@ -1,7 +1,8 @@
 import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
 import { AppError } from '@shared/errors/AppError';
 import 'reflect-metadata';
-import FakeUsersRepository from '../infra/typeorm/repositories/fakes/FakeUsersRepository';
+import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
+
 import { UpdateUserAvatarService } from './UpdateUserAvatarService';
 
 describe('UpdateUserAvatar', () => {
