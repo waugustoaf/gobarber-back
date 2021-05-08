@@ -1,3 +1,3 @@
-import { createConnection } from 'typeorm';
+import { createConnections } from 'typeorm';
 
-createConnection(); // Recebe os dados do ormconfig
+createConnections(); // Recebe os dados do ormconfig
