@@ -1,17 +1,21 @@
 import { AppError } from '@shared/errors/AppError';
 import 'reflect-metadata';
+import FakeNotificationsRepository from '@modules/notifications/repositories/fakes/FakeNotificationsRepository';
 import FakeAppointmentsRepository from '../infra/typeorm/repositories/fakes/FakeAppointmentsRepository';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 import CreateAppointmentService from './CreateAppointmentService';
 
 let fakeAppointmentsRepository: IAppointmentsRepository;
 let createAppointment: CreateAppointmentService;
+let fakeNotificationsRepository: FakeNotificationsRepository;
 
 describe('CreateAppointment', () => {
     beforeEach(() => {
         fakeAppointmentsRepository = new FakeAppointmentsRepository();
+        fakeNotificationsRepository = new FakeNotificationsRepository();
         createAppointment = new CreateAppointmentService(
             fakeAppointmentsRepository,
+            fakeNotificationsRepository,
         );
     });
 

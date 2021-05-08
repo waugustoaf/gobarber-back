@@ -1,7 +1,8 @@
 import uploadConfig from '@config/upload';
+import '@shared/container';
 import { AppError } from '@shared/errors/AppError';
 import '@shared/infra/typeorm';
-import '@shared/container';
+import { errors } from 'celebrate';
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
@@ -14,6 +15,8 @@ app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.tmpFolder));
 app.use(routes);
+
+app.use(errors());
 
 app.use(
     (err: Error, request: Request, response: Response, _next: NextFunction) => {
