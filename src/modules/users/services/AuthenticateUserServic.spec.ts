@@ -5,21 +5,15 @@ import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import IUsersRepository from '../repositories/IUsersRepository';
 import { AuthenticateUserService } from './AuthenticateUserService';
-import { CreateUserService } from './CreateUserService';
 
 let fakeUsersRepository: IUsersRepository;
 let fakeHashProvider: IHashProvider;
-let createUser: CreateUserService;
 let authenticateUser: AuthenticateUserService;
 
 describe('AuthenticateUser', () => {
     beforeEach(() => {
         fakeUsersRepository = new FakeUsersRepository();
         fakeHashProvider = new FakeHashProvider();
-        createUser = new CreateUserService(
-            fakeUsersRepository,
-            fakeHashProvider,
-        );
         authenticateUser = new AuthenticateUserService(
             fakeUsersRepository,
             fakeHashProvider,
@@ -27,18 +21,12 @@ describe('AuthenticateUser', () => {
     });
 
     it('should be able to authenticate', async () => {
-        fakeUsersRepository = new FakeUsersRepository();
-        fakeHashProvider = new FakeHashProvider();
-        createUser = new CreateUserService(
-            fakeUsersRepository,
-            fakeHashProvider,
-        );
         authenticateUser = new AuthenticateUserService(
             fakeUsersRepository,
             fakeHashProvider,
         );
 
-        const user = await createUser.execute({
+        const user = await fakeUsersRepository.create({
             email: 'johndoe@example.com',
             name: 'John Doe',
             password: '123456',
@@ -70,7 +58,7 @@ describe('AuthenticateUser', () => {
     });
 
     it('should not be able to authenticate non existing existing user', async () => {
-        await createUser.execute({
+        await fakeUsersRepository.create({
             email: 'johndoe@example.com',
             name: 'John Doe',
             password: '123456',

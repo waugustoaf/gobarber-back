@@ -1,6 +1,6 @@
 import User from '@modules/users/infra/typeorm/entities/User';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import ICacheProvider from '@shared/container/providers/CacheProvider/implementations/RedisCacheProvider';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICashProvider';
 import { inject, injectable } from 'tsyringe';
 
 interface IRequest {

@@ -1,15 +1,21 @@
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import 'reflect-metadata';
 import { ListProvidersService } from './ListProvidersService';
 
 let fakeUsersRepository: IUsersRepository;
 let listProvider: ListProvidersService;
+let fakeCacheProvider: FakeCacheProvider;
 
 describe('UpdateProfile', () => {
     beforeEach(() => {
         fakeUsersRepository = new FakeUsersRepository();
-        listProvider = new ListProvidersService(fakeUsersRepository);
+        fakeCacheProvider = new FakeCacheProvider();
+        listProvider = new ListProvidersService(
+            fakeUsersRepository,
+            fakeCacheProvider,
+        );
     });
 
     it('should be able to list the providers', async () => {
