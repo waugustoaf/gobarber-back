@@ -3,3 +3,5 @@ tmp/*
 !tmp/.gitkeep
 src/config/auth.ts
 coverage/
+.env
+ormconfig.json
