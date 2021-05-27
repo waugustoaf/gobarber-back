@@ -5,3 +5,5 @@ src/config/auth.ts
 coverage/
 .env
 ormconfig.json
+dist/
+passwordDeploy.txt
