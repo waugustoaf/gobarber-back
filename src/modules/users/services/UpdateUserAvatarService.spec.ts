@@ -1,3 +1,4 @@
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import { AppError } from '@shared/errors/AppError';
@@ -10,14 +11,17 @@ import { UpdateUserAvatarService } from './UpdateUserAvatarService';
 let fakeUsersRepository: IUsersRepository;
 let fakeStorageProvider: IStorageProvider;
 let updateUserAvatar: UpdateUserAvatarService;
+let fakeCacheProvider: FakeCacheProvider;
 
 describe('UpdateUserAvatar', () => {
     beforeEach(() => {
         fakeUsersRepository = new FakeUsersRepository();
         fakeStorageProvider = new FakeStorageProvider();
+        fakeCacheProvider = new FakeCacheProvider();
         updateUserAvatar = new UpdateUserAvatarService(
             fakeUsersRepository,
             fakeStorageProvider,
+            fakeCacheProvider,
         );
     });
 
